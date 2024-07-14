@@ -6,4 +6,5 @@ import (
 
 func main() {
 	lang.DeclareVariables()
+	lang.ArraysExample()
 }
