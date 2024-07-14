@@ -62,8 +62,6 @@
 
 ## 4. Pointers
 
-#### Understanding Pointers
-
 Pointers are a powerful feature in Go that allow you to directly manipulate memory addresses. A pointer holds the memory address of a value rather than the value itself. 
 
 **Declaring and Dereferencing Pointers**
@@ -288,7 +286,7 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
 
 ## 9. Package Management
 
-#### Go Project Structure
+### Go Project Structure
 
 [Project Structure](https://medium.com/evendyne/getting-started-with-go-project-structure-ab8814ded9c3)
 
@@ -312,7 +310,7 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
     └── README.md
 ```
 
-#### Directory Structure Explanation:
+### Directory Structure Explanation:
 
 1. **`cmd/`**
 
@@ -342,7 +340,7 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
    - Contains expected cryptographic checksums of the content of specific module versions.
    - Ensures reproducible builds by verifying the integrity of dependencies.
 
-#### Creating and Using Packages
+### Creating and Using Packages
 
 **Package Declaration and Imports**
 
@@ -377,7 +375,7 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
     }
 ```
 
-#### Modules and Dependency Management
+### Modules and Dependency Management
 
 **go.mod and go.sum Files**
 
@@ -418,7 +416,7 @@ Create a new module in the current directory
    go get -u github.com/some/dependency
 ```
 
-#### Releasing and Versioning Modules
+### Releasing and Versioning Modules
 
 **Tagging Versions**
 Tag module releases with versions.
@@ -435,7 +433,7 @@ Specify version constraints in go.mod for controlled dependencies.
    require github.com/some/dependency v1.2.0 // Use v1.2.0
 ```
 
-#### Vendoring Dependencies
+### Vendoring Dependencies
 In Go, vendoring refers to the practice of storing dependencies locally within your project, typically in a directory named `vendor/`. This approach ensures that your project uses specific versions of dependencies, which is crucial for reproducible builds and managing changes over time.
 
 **Enable Vendoring**
