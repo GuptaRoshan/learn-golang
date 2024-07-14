@@ -1,0 +1,1 @@
+This directory is used for internal specific packages for project

@@ -1,0 +1,1 @@
+This directory is used for creating scripts for automatic builds for project
