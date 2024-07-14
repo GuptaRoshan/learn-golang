@@ -1,6 +1,12 @@
 package lang
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+	"unicode"
+)
+
+// ----------------------------------------Variables and Types----------------------------------------//
 
 // DeclareVariables demonstrates variable declaration and assignment.
 func DeclareVariables() {
@@ -63,6 +69,125 @@ func TypeConversions() {
 	fmt.Println("a as int:", b)
 }
 
+// ----------------------------------------Char or Rune----------------------------------------//
+func CharOperations() {
+	// String to rune slice
+	str := "Hello, 世界"
+	runes := []rune(str)
+	fmt.Println("Original string:", str)
+
+	// Iterate over runes
+	fmt.Print("Runes: ")
+	for _, r := range runes {
+		fmt.Printf("%c ", r)
+	}
+	fmt.Println()
+
+	// Modify a rune
+	runes[0] = 'h'
+	modifiedStr := string(runes)
+	fmt.Println("Modified string:", modifiedStr)
+
+	// Length of string in runes
+	fmt.Println("Length of string in runes:", len(runes))
+
+	// Check if a rune is a letter or digit
+	r := '1'
+	if unicode.IsLetter(r) {
+		fmt.Println("r is a letter")
+	} else if unicode.IsDigit(r) {
+		fmt.Println("r is a digit")
+	} else {
+		fmt.Println("r is neither a letter nor a digit")
+	}
+
+	// Convert rune to string
+	r2 := 'g'
+	str2 := string(r2)
+	fmt.Println("Rune to string:", str2)
+
+	// Convert string to rune
+	str3 := "h"
+	r3 := []rune(str3)[0]
+	fmt.Println("String to rune:", r3)
+
+}
+
+// ----------------------------------------Strings----------------------------------------//
+
+func StringOperations() {
+	// String Concatenation
+	str1 := "Hello, "
+	str2 := "World!"
+	result := str1 + str2
+	fmt.Println(result) // Output: Hello, World!
+
+	// String Length
+	length := len(result)
+	fmt.Println(length) // Output: 13
+
+	// Accessing Characters
+	char := result[0]
+	fmt.Printf("%c\n", char) // Output: H
+
+	// String Comparison
+	str3 := "Go"
+	str4 := "Go"
+	str5 := "Golang"
+	fmt.Println(str3 == str4) // Output: true
+	fmt.Println(str3 == str5) // Output: false
+
+	// Substrings
+	substr := result[7:12]
+	fmt.Println(substr) // Output: World
+
+	// Contains
+	contains := strings.Contains(result, "World")
+	fmt.Println(contains) // Output: true
+
+	// Index
+	index := strings.Index(result, "World")
+	fmt.Println(index) // Output: 7
+
+	// Replace
+	newStr := strings.Replace(result, "World", "Go", 1)
+	fmt.Println(newStr) // Output: Hello, Go!
+
+	// Split
+	parts := strings.Split(result, ", ")
+	fmt.Println(parts) // Output: [Hello World!]
+
+	// ToUpper and ToLower
+	upper := strings.ToUpper(result)
+	lower := strings.ToLower(result)
+	fmt.Println(upper) // Output: HELLO, WORLD!
+	fmt.Println(lower) // Output: hello, world!
+
+	// Trim
+	strWithSpaces := "  Hello, World!  "
+	trimmed := strings.TrimSpace(strWithSpaces)
+	fmt.Println(trimmed) // Output: Hello, World!
+
+	// Join
+	joined := strings.Join(parts, ", ")
+	fmt.Println(joined) // Output: Hello, World!
+
+	/*
+	  String to Rune Conversion
+	  In Go, a rune is an alias for int32 and represents a Unicode code point. While strings in Go are sequences of bytes (uint8),
+	  runes are used to handle Unicode characters, allowing for more efficient and intuitive processing of multi-byte characters.
+	*/
+	runes := []rune(str1)
+	for _, r := range runes {
+		fmt.Printf("%c ", r) // Output: H e l l o ,
+		fmt.Printf("%U ", r) // unicode
+	}
+
+	fmt.Println() // New line for better formatting
+}
+
+// ----------------------------------------Operators----------------------------------------//
+
 // OperatorsExpressions demonstrates various operators in Go.
 func OperatorsExpressions() {
 	// Arithmetic operators
@@ -90,6 +215,8 @@ func OperatorsExpressions() {
 	fmt.Println("5 << 1 =", 5<<1)
 	fmt.Println("5 >> 1 =", 5>>1)
 }
+
+// ----------------------------------------Loops----------------------------------------//
 
 // SwitchStatements demonstrates switch statements in Go.
 func SwitchStatements() {
@@ -169,6 +296,8 @@ loop:
 		goto loop
 	}
 }
+
+// ----------------------------------------Functions----------------------------------------//
 
 // DefineCallFunctions demonstrates defining and calling functions in Go.
 func DefineCallFunctions() {

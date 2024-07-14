@@ -6,32 +6,15 @@ import "fmt"
 func PointerExample() {
 	// Declare a variable and a pointer
 	num := 10
-	var ptr *int // Pointer to an int
 
-	// Assign the address of num to ptr
-	ptr = &num
+	// Pointer vraiable for storing address
+	var ptr *int = &num
 
 	// Print the value and address of num
 	fmt.Println("Value of num:", num)    // Output: 10
 	fmt.Println("Address of num:", &num) // Output: Address in memory
 	fmt.Println("Value of ptr:", ptr)    // Output: Address of num
 	fmt.Println("Value at ptr:", *ptr)   // Output: 10 (Dereferencing)
-}
-
-// PointerDereferencingExample demonstrates pointer dereferencing in Go.
-func PointerDereferencingExample() {
-	// Declare a variable and a pointer
-	num := 10
-	var ptr *int // Pointer to an int
-
-	// Assign the address of num to ptr
-	ptr = &num
-
-	// Modify the value through the pointer
-	*ptr = 20
-
-	// Print the updated value of num
-	fmt.Println("Updated value of num:", num) // Output: 20
 }
 
 // PointerVsValueTypesExample demonstrates the difference between pointer and value types in Go.
@@ -45,10 +28,9 @@ func PointerVsValueTypesExample() {
 	fmt.Println("x:", x) // Output: 10 (unchanged)
 
 	// Pointer type
-	var ptr *int
-	ptr = &x
-
+	var ptr *int = &x
 	*ptr = 30
+
 	fmt.Println("x:", x) // Output: 30 (changed)
 }
 
