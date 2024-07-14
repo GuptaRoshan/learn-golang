@@ -64,158 +64,158 @@
 
 Pointers are a powerful feature in Go that allow you to directly manipulate memory addresses. A pointer holds the memory address of a value rather than the value itself. 
 
-**Declaring and Dereferencing Pointers**
+- **Declaring and Dereferencing Pointers**
 
-```go
+  ```go
 
-    var a int = 42
-    // Pointer Declaration var p *int, assigning address &a of a
-    var p *int = &a
+      var a int = 42
+      // Pointer Declaration var p *int, assigning address &a of a
+      var p *int = &a
 
-    // Print the value of a
-    fmt.Println("Value of a:", a) // Output: 42
+      // Print the value of a
+      fmt.Println("Value of a:", a) // Output: 42
 
-    // Print the address of a
-    fmt.Println("Address of a:", &a)
+      // Print the address of a
+      fmt.Println("Address of a:", &a)
 
-    // Print the value of the pointer p (which is the address of a)
-    fmt.Println("Value of pointer p:", p)
+      // Print the value of the pointer p (which is the address of a)
+      fmt.Println("Value of pointer p:", p)
 
-    // Dereference the pointer to get the value stored at the address
-    fmt.Println("Value at the address p points to:", *p) // Output: 42
+      // Dereference the pointer to get the value stored at the address
+      fmt.Println("Value at the address p points to:", *p) // Output: 42
 
-    // Modify the value at the address using the pointer
-    *p = 100
-    fmt.Println("New value of a:", a) // Output: 100
+      // Modify the value at the address using the pointer
+      *p = 100
+      fmt.Println("New value of a:", a) // Output: 100
 
-```
+  ```
 
-**Visual Explanation**
+- **Visual Explanation**
 
-1. Initial State : `a is an integer variable storing the value 42. p is a pointer to an integer.`
+  1. Initial State : `a is an integer variable storing the value 42. p is a pointer to an integer.`
 
-```go
-    +----+     +------+
-    | a  |     |  p   |
-    +----+     +------+
-    | 42 |     | nil  |
-    +----+     +------+
-```    
+  ```go
+      +----+     +------+
+      | a  |     |  p   |
+      +----+     +------+
+      | 42 |     | nil  |
+      +----+     +------+
+  ```    
 
-2. Assign the Address of a to p : p = `&a assigns the address of a to p.`
+  2. Assign the Address of a to p : p = `&a assigns the address of a to p.`
 
-```go
-    +----+     +------+
-    | a  |     |  p   |
-    +----+     +------+
-    | 42 |     | &a   |
-    +----+     +------+
-```    
+  ```go
+      +----+     +------+
+      | a  |     |  p   |
+      +----+     +------+
+      | 42 |     | &a   |
+      +----+     +------+
+  ```    
 
 
-3. Dereference p to Access the Value of a : `*p gives you access to the value stored at the address p points to (which is a).`
+  3. Dereference p to Access the Value of a : `*p gives you access to the value stored at the address p points to (which is a).`
 
-```go
-    +----+     +------+
-    | a  |     |  p   |
-    +----+     +------+
-    | 42 |     | &a   |
-    +----+     +------+
-      ^           |
-      |           |
-      +-----------+
-```
+  ```go
+      +----+     +------+
+      | a  |     |  p   |
+      +----+     +------+
+      | 42 |     | &a   |
+      +----+     +------+
+        ^           |
+        |           |
+        +-----------+
+  ```
 
-4. Modify the Value at the Address : `*p = 100 changes the value at the address p points to, which modifies a.`
+  4. Modify the Value at the Address : `*p = 100 changes the value at the address p points to, which modifies a.`
 
-```go
-    +----+     +------+
-    | a  |     |  p   |
-    +----+     +------+
-    |100 |     | &a   |
-    +----+     +------+
-      ^           |
-      |           |
-      +-----------+
-```      
+  ```go
+      +----+     +------+
+      | a  |     |  p   |
+      +----+     +------+
+      |100 |     | &a   |
+      +----+     +------+
+        ^           |
+        |           |
+        +-----------+
+  ```      
 
-#### Pass by copy and reference
+- **Pass by copy and reference**
 
-```go
+  ```go
 
-  func PointerVsValueTypesExample() {
-    // Value type
-    var x int = 10
-    y := x // y is a copy of x
+    func PointerVsValueTypesExample() {
+      // Value type
+      var x int = 10
+      y := x // y is a copy of x
 
-    y = 20
-    _ = y                // mark y unsused to avoid compile error
-    fmt.Println("x:", x) // Output: 10 (unchanged)
+      y = 20
+      _ = y                // mark y unsused to avoid compile error
+      fmt.Println("x:", x) // Output: 10 (unchanged)
 
-    // Pointer type
-    var ptr *int = &x
-    *ptr = 30
+      // Pointer type
+      var ptr *int = &x
+      *ptr = 30
 
-    fmt.Println("x:", x) // Output: 30 (changed)
-  }
-
-```
-
-#### Pointers to Structs and Functions
-
-```go
-
-  func PointerToStructsExample() {
-    // Define a struct
-    type Person struct {
-      Name string
-      Age  int
+      fmt.Println("x:", x) // Output: 30 (changed)
     }
 
-    // Create an instance of Person using pointer
-    var p *Person = &Person{
-      Name: "Alice",
-      Age:  30,
-    }
+  ```
 
-    // Access fields using pointer dereferencing
-    fmt.Println("Name:", p.Name) // Output: Alice
-    fmt.Println("Age:", p.Age)   // Output: 30
-  }
+-  **Pointers to Structs and Functions**
 
-```
+    ```go
 
-```go
+      func PointerToStructsExample() {
+        // Define a struct
+        type Person struct {
+          Name string
+          Age  int
+        }
 
-  func PointerToFunctionsExample() {
-    // Define a function type
-    type MathFunc func(int, int) int
+        // Create an instance of Person using pointer
+        var p *Person = &Person{
+          Name: "Alice",
+          Age:  30,
+        }
 
-    // Function to add two numbers
-    add := func(a, b int) int {
-      return a + b
-    }
+        // Access fields using pointer dereferencing
+        fmt.Println("Name:", p.Name) // Output: Alice
+        fmt.Println("Age:", p.Age)   // Output: 30
+      }
 
-    // Function to subtract two numbers
-    subtract := func(a, b int) int {
-      return a - b
-    }
+    ```
 
-    // Pointer to functions
-    var mathFunc MathFunc
-    mathFunc = add
+    ```go
 
-    // Call the function through the pointer
-    result := mathFunc(10, 5)
-    fmt.Println("Result of addition:", result) // Output: 15
+      func PointerToFunctionsExample() {
+        // Define a function type
+        type MathFunc func(int, int) int
 
-    // Change pointer to subtract function
-    mathFunc = subtract
-    result = mathFunc(10, 5)
-    fmt.Println("Result of subtraction:", result) // Output: 5
-  }
+        // Function to add two numbers
+        add := func(a, b int) int {
+          return a + b
+        }
 
-```
+        // Function to subtract two numbers
+        subtract := func(a, b int) int {
+          return a - b
+        }
+
+        // Pointer to functions
+        var mathFunc MathFunc
+        mathFunc = add
+
+        // Call the function through the pointer
+        result := mathFunc(10, 5)
+        fmt.Println("Result of addition:", result) // Output: 15
+
+        // Change pointer to subtract function
+        mathFunc = subtract
+        result = mathFunc(10, 5)
+        fmt.Println("Result of subtraction:", result) // Output: 5
+      }
+
+    ```
 
 
 
@@ -342,117 +342,117 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
 
 ### Creating and Using Packages
 
-**Package Declaration and Imports**
+- **Package Declaration and Imports**
 
-```go
-  // Package declaration
-  package main
+  ```go
+    // Package declaration
+    package main
 
- // Importing fmt package
-  import (
-    "fmt"
-    "net/http"
-   )
-```
+  // Importing fmt package
+    import (
+      "fmt"
+      "net/http"
+    )
+  ```
 
-**Exported and Unexported Identifiers**
+- **Exported and Unexported Identifiers**
 
-- Exported Identifiers: Start with a capital letter, accessible from outside the package.
-- Unexported Identifiers: Start with a lowercase letter, accessible only within the same package.
+  - Exported Identifiers: Start with a capital letter, accessible from outside the package.
+  - Unexported Identifiers: Start with a lowercase letter, accessible only within the same package.
 
-```go
-    package mypackage
+  ```go
+      package mypackage
 
-    func ExportedFunction() { // Exported function
-        fmt.Println("Exported function")
-    }
+      func ExportedFunction() { // Exported function
+          fmt.Println("Exported function")
+      }
 
 
-    package mypackage
+      package mypackage
 
-    func unexportedFunction() { // Unexported function
-        fmt.Println("Unexported function")
-    }
-```
+      func unexportedFunction() { // Unexported function
+          fmt.Println("Unexported function")
+      }
+  ```
 
 ### Modules and Dependency Management
 
-**go.mod and go.sum Files**
+- **go.mod and go.sum Files**
 
-`go.mod File`: Defines the module's path and dependencies.
+  `go.mod File`: Defines the module's path and dependencies.
 
-```go
-   module example.com/myproject
+  ```go
+    module example.com/myproject
 
-   go 1.16
+    go 1.16
 
-   require (
-       github.com/some/dependency v1.2.3
-   )
-```
+    require (
+        github.com/some/dependency v1.2.3
+    )
+  ```
 
-`go.sum File`: Records cryptographic hashes of module contents for reproducible builds.
+  `go.sum File`: Records cryptographic hashes of module contents for reproducible builds.
 
-```go
-   github.com/some/dependency v1.2.3 h1:abcdef...
-```
+  ```go
+    github.com/some/dependency v1.2.3 h1:abcdef...
+  ```
 
-**Initialize a Module**
-Create a new module in the current directory
+- **Initialize a Module**
+  Create a new module in the current directory
 
-```go
-   go mod init example.com/myproject
-```
+  ```go
+    go mod init example.com/myproject
+  ```
 
-**Adding Dependencies**
+- **Adding Dependencies**
 
-```go
-   go get github.com/some/dependency@v1.2.3
-```
+  ```go
+    go get github.com/some/dependency@v1.2.3
+  ```
 
-**Updating Dependencies**
+- **Updating Dependencies**
 
-```go
-   go get -u github.com/some/dependency
-```
+  ```go
+    go get -u github.com/some/dependency
+  ```
 
 ### Releasing and Versioning Modules
 
-**Tagging Versions**
-Tag module releases with versions.
+- **Tagging Versions**
+  Tag module releases with versions.
 
-```go
-   git tag v1.0.0
-   git push origin v1.0.0
-```
+  ```go
+    git tag v1.0.0
+    git push origin v1.0.0
+  ```
 
-**Version Constraints**
-Specify version constraints in go.mod for controlled dependencies.
+- **Version Constraints**
+  Specify version constraints in go.mod for controlled dependencies.
 
-```go
-   require github.com/some/dependency v1.2.0 // Use v1.2.0
-```
+  ```go
+    require github.com/some/dependency v1.2.0 // Use v1.2.0
+  ```
 
 ### Vendoring Dependencies
 In Go, vendoring refers to the practice of storing dependencies locally within your project, typically in a directory named `vendor/`. This approach ensures that your project uses specific versions of dependencies, which is crucial for reproducible builds and managing changes over time.
 
-**Enable Vendoring**
+- **Enable Vendoring**
 
-```go
-    go mod vendor
-```
+  ```go
+      go mod vendor
+  ```
 
-**Updating Vendored Dependencies**
+- **Updating Vendored Dependencies**
 
-```go
-    go mod vendor -u
-```
+  ```go
+      go mod vendor -u
+  ```
 
-**Cleaning Vendored Dependencies**
+- **Cleaning Vendored Dependencies**
 
-```go
-    go mod tidy
-```
+  ```go
+      go mod tidy
+  ```
 
 
 
