@@ -227,102 +227,95 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
   - Creating and Running Goroutines
    > A goroutine is a lightweight thread managed by the Go runtime. You create a goroutine by prefixing a function call with the go keyword.
 
-   ```go
-   package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func sayHello() {
-    fmt.Println("Hello")
-}
-
-func main() {
-    go sayHello() // Launches sayHello as a goroutine
-    time.Sleep(1 * time.Second) // Give the goroutine time to complete
-}
-
- ```
+  ```go
+      package main
+      
+      import (
+          "fmt"
+          "time"
+      )
+      
+      func sayHello() {
+          fmt.Println("Hello")
+      }
+      
+      func main() {
+          go sayHello() // Launches sayHello as a goroutine
+          time.Sleep(1 * time.Second) // Give the goroutine time to complete
+      }
+  ```
     
   - Goroutine Lifecycle
     >  A goroutine starts with the go keyword and ends when the function completes. They run concurrently with other goroutines.
 
-   ```go
-
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-    for i := 0; i < 3; i++ {
-        go func(i int) {
-            fmt.Println(i)
-        }(i)
-    }
-    time.Sleep(1 * time.Second)
-}
-
-
-```
+  ```go
+      package main
+      
+      import (
+          "fmt"
+          "time"
+      )
+      
+      func main() {
+          for i := 0; i < 3; i++ {
+              go func(i int) {
+                  fmt.Println(i)
+              }(i)
+          }
+          time.Sleep(1 * time.Second)
+      }
+   ```
 
 - **Channels**
    > Channels provide a way for goroutines to communicate and synchronize. They can be used to send and receive values between goroutines.
   - Creating and Using Channels
     > Channels are created using the make function.
     
-    ```go
-
-    package main
-
-import "fmt"
-
-func main() {
-    ch := make(chan int)
-
-    go func() {
-        ch <- 42 // Send value to channel
-    }()
-
-    value := <-ch // Receive value from channel
-    fmt.Println(value) // Output: 42
-}
-    ```
+  ```go
+      package main
+      
+      import "fmt"
+      
+      func main() {
+          ch := make(chan int)
+      
+          go func() {
+              ch <- 42 // Send value to channel
+          }()
+      
+          value := <-ch // Receive value from channel
+          fmt.Println(value) // Output: 42
+      }
+  ```
     
-  - Unbuffered
+  - Unbuffered Channels
    > Creation: `ch := make(chan int)`
 
    > Behavior: An unbuffered channel has zero capacity. This means that a send operation on an unbuffered channel blocks the sending goroutine until another goroutine is ready to receive the value. Similarly, a receive operation blocks until a value is sent.
 
   > Use cases: Unbuffered channels are useful for synchronizing goroutines. They enforce a strict one-to-one communication pattern, ensuring that the sender and receiver are coordinated at a specific point in their execution.
-
-```go
-
-package main
-
-import "fmt"
-
-func main() {
-    ch := make(chan int)
-
-    go func() {
-        fmt.Println("Sending value...")
-        ch <- 42
-        fmt.Println("Value sent!")
-    }()
-
-    fmt.Println("Receiving value...")
-    value := <-ch
-    fmt.Println("Value received:", value)
-}
-
-```
+  
+  ```go
+    package main
     
-  -  Unbuffered Channels
+    import "fmt"
+    
+    func main() {
+        ch := make(chan int)
+    
+        go func() {
+            fmt.Println("Sending value...")
+            ch <- 42
+            fmt.Println("Value sent!")
+        }()
+    
+        fmt.Println("Receiving value...")
+        value := <-ch
+        fmt.Println("Value received:", value)
+    }
+  ```
+    
+  -  Buffered Channels
 
    > Creation: `ch := make(chan int, 2) (capacity of 2)`
 
@@ -330,42 +323,43 @@ func main() {
 
    > Use cases: Buffered channels are used when you want to create a pipeline-like pattern, where the sender can send multiple values without waiting for each one to be received immediately. This can improve performance by decoupling the sender and receiver.
 
-```go
+  ```go
     package main
-
-import "fmt"
-
-func main() {
-    ch := make(chan int, 2)
-
-    ch <- 1
-    ch <- 2
-
-    fmt.Println(<-ch)
-    fmt.Println(<-ch)
-}
-```
+    
+    import "fmt"
+    
+    func main() {
+        ch := make(chan int, 2)
+    
+        ch <- 1
+        ch <- 2
+    
+        fmt.Println(<-ch)
+        fmt.Println(<-ch)
+    }
+  ```
 
   - Sending and Receiving Data
+    
     > Data is sent to and received from channels using the <- operator.
 
-    ```go
-
+  ```go
     package main
-
-import "fmt"
-
-func main() {
-    ch := make(chan string)
-
-    go func() {
-        ch <- "Hello from goroutine"
-    }()
-
-    message := <-ch
-    fmt.Println(message) // Output: Hello from goroutine
-}
-    ```
+    
+    import "fmt"
+    
+    func main() {
+        ch := make(chan string)
+    
+        go func() {
+            ch <- "Hello from goroutine"
+        }()
+    
+        message := <-ch
+        fmt.Println(message) // Output: Hello from goroutine
+    }
+  ```
+  
   - Channel Directions
 
    > In Go, channels can be directional, meaning they can be restricted to only sending or receiving values. This can help enforce correct usage patterns and make your code more readable and safer. There are three types of channel directions:
@@ -374,8 +368,14 @@ func main() {
    > 2. Send-only channels: Can only be used for sending values.
    > 3. Receive-only channels: Can only be used for receiving values.
 
+  - Bidirectional channels
+ 
   
-    
+  - Send-only channels
+ 
+  
+  - Receive-only channels
+     
 - **Select Statement**
   - Using `select` for Multiplexing
 - **Synchronization (sync package)**
