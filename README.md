@@ -726,8 +726,55 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
       }
     ```
 - **Panic and Recover**
+  > panic is used for handling unexpected errors, and recover is used to regain control after a panic.
   - Using `panic` for Unexpected Errors
+    > Use panic when an error should stop the normal execution of the program.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      )
+      
+      func checkPositive(number int) {
+      	if number < 0 {
+      		panic("number is negative")
+      	}
+      	fmt.Println("Number is positive")
+      }
+      
+      func main() {
+      	checkPositive(10)
+      	checkPositive(-1)
+      }
+    ```
   - Using `recover` to Handle Panics
+    > recover allows you to regain control after a panic.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      )
+      
+      func checkPositive(number int) {
+      	defer func() {
+      		if r := recover(); r != nil {
+      			fmt.Println("Recovered from panic:", r)
+      		}
+      	}()
+      	if number < 0 {
+      		panic("number is negative")
+      	}
+      	fmt.Println("Number is positive")
+      }
+      
+      func main() {
+      	checkPositive(10)
+      	checkPositive(-1)
+      	fmt.Println("Program continues...")
+      }
+    ```
 
 ## 7. Advanced Topics
 
