@@ -435,11 +435,174 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
      
 - **Select Statement**
   - Using `select` for Multiplexing
+    > The select statement is used for multiplexing channels. It allows a goroutine to wait on multiple communication operations, proceeding with the first one that becomes ready.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      	"time"
+      )
+      
+      func main() {
+      	ch1 := make(chan string)
+      	ch2 := make(chan string)
+      
+      	go func() {
+      		time.Sleep(1 * time.Second)
+      		ch1 <- "from ch1"
+      	}()
+      
+      	go func() {
+      		time.Sleep(2 * time.Second)
+      		ch2 <- "from ch2"
+      	}()
+      
+      	for i := 0; i < 2; i++ {
+      		select {
+      		case msg1 := <-ch1:
+      			fmt.Println(msg1)
+      		case msg2 := <-ch2:
+      			fmt.Println(msg2)
+      		}
+      	}
+      }
+    ```
 - **Synchronization (sync package)**
+  > The sync package provides synchronization primitives, such as WaitGroups, Mutexes, RWMutexes, and Once.
   - WaitGroups
+    > WaitGroups are used to wait for a collection of goroutines to finish executing.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      	"sync"
+      )
+      
+      func worker(id int, wg *sync.WaitGroup) {
+      	defer wg.Done()
+      	fmt.Printf("Worker %d starting\n", id)
+      	// Simulate work
+      	fmt.Printf("Worker %d done\n", id)
+      }
+      
+      func main() {
+      	var wg sync.WaitGroup
+      
+      	for i := 1; i <= 3; i++ {
+      		wg.Add(1)
+      		go worker(i, &wg)
+      	}
+      
+      	wg.Wait()
+      }
+    ```
   - Mutexes (`sync.Mutex`)
+    > Mutexes provide a way to ensure that only one goroutine accesses a critical section of code at a time.
+    ```go
+      package main
+  
+      import (
+        "fmt"
+        "sync"
+      )
+      
+      var counter int
+      var mu sync.Mutex
+      
+      func increment(wg *sync.WaitGroup) {
+        defer wg.Done()
+        mu.Lock()
+        counter++
+        mu.Unlock()
+      }
+      
+      func main() {
+        var wg sync.WaitGroup
+      
+        for i := 0; i < 1000; i++ {
+          wg.Add(1)
+          go increment(&wg)
+        }
+      
+        wg.Wait()
+        fmt.Println("Final counter value:", counter)
+      }
+    ```
   - RWMutex (`sync.RWMutex`)
+    > RWMutex is a reader/writer mutual exclusion lock. It allows multiple readers or one writer at a time.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      	"sync"
+      )
+      
+      var counter int
+      var rw sync.RWMutex
+      
+      func read(wg *sync.WaitGroup) {
+      	defer wg.Done()
+      	rw.RLock()
+      	fmt.Println("Read counter value:", counter)
+      	rw.RUnlock()
+      }
+      
+      func write(wg *sync.WaitGroup) {
+      	defer wg.Done()
+      	rw.Lock()
+      	counter++
+      	fmt.Println("Incremented counter value:", counter)
+      	rw.Unlock()
+      }
+      
+      func main() {
+      	var wg sync.WaitGroup
+      
+      	for i := 0; i < 5; i++ {
+      		wg.Add(1)
+      		go write(&wg)
+      		wg.Add(1)
+      		go read(&wg)
+      	}
+      
+      	wg.Wait()
+      }
+    ```
   - Once (`sync.Once`)
+    > Once ensures that a piece of code is executed only once, no matter how many times the Do method is called.
+    ```go
+       package main
+  
+      import (
+        "fmt"
+        "sync"
+      )
+      
+      var once sync.Once
+      
+      func initialize() {
+        fmt.Println("Initialized")
+      }
+      
+      func worker(wg *sync.WaitGroup) {
+        defer wg.Done()
+        once.Do(initialize)
+      }
+      
+      func main() {
+        var wg sync.WaitGroup
+      
+        for i := 0; i < 10; i++ {
+          wg.Add(1)
+          go worker(&wg)
+        }
+      
+        wg.Wait()
+      }
+    ```
 
 ## 6. Error Handling
 
