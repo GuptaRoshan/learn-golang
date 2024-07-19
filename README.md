@@ -607,11 +607,124 @@ Pointers are a powerful feature in Go that allow you to directly manipulate memo
 ## 6. Error Handling
 
 - **Error Types**
+  > Go has a built-in error type for handling errors, and you can also define custom error types.
   - Built-in `error` Type
+    > Go has a built-in error type for handling errors, and you can also define custom error types.'
+    ```go
+      package main
+      
+      import (
+      	"errors"
+      	"fmt"
+      )
+      
+      func divide(a, b int) (int, error) {
+      	if b == 0 {
+      		return 0, errors.New("cannot divide by zero")
+      	}
+      	return a / b, nil
+      }
+      
+      func main() {
+      	result, err := divide(4, 0)
+      	if err != nil {
+      		fmt.Println("Error:", err)
+      		return
+      	}
+      	fmt.Println("Result:", result)
+      }
+    ```
   - Custom Error Types
+    > You can define custom error types by implementing the Error() method.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      )
+      
+      type MyError struct {
+      	Function string
+      	Message  string
+      }
+      
+      func (e *MyError) Error() string {
+      	return fmt.Sprintf("%s: %s", e.Function, e.Message)
+      }
+      
+      func riskyFunction() error {
+      	return &MyError{Function: "riskyFunction", Message: "something went wrong"}
+      }
+      
+      func main() {
+      	err := riskyFunction()
+      	if err != nil {
+      		fmt.Println("Error:", err)
+      	}
+      }
+    ```
 - **Error Handling Strategies**
+  > Error handling strategies in Go include checking for errors and handling them immediately, wrapping errors, and using panic and recover for unexpected situations.
   - Returning Errors from Functions
+    > Functions in Go often return an error as the last return value.
+    ```go
+      package main
+      
+      import (
+      	"fmt"
+      	"os"
+      )
+      
+      func readFile(filename string) ([]byte, error) {
+      	data, err := os.ReadFile(filename)
+      	if err != nil {
+      		return nil, err
+      	}
+      	return data, nil
+      }
+      
+      func main() {
+      	data, err := readFile("example.txt")
+      	if err != nil {
+      		fmt.Println("Error:", err)
+      		return
+      	}
+      	fmt.Println("File content:", string(data))
+      }
+    ```
   - Error Wrapping and Unwrapping (`fmt.Errorf`, `errors` package)
+    > Wrapping errors with additional context can be done using fmt.Errorf and the errors package.
+    ```go
+      package main
+      
+      import (
+      	"errors"
+      	"fmt"
+      )
+      
+      func readFile(filename string) ([]byte, error) {
+      	// Simulate an error
+      	return nil, errors.New("file not found")
+      }
+      
+      func processFile(filename string) error {
+      	data, err := readFile(filename)
+      	if err != nil {
+      		return fmt.Errorf("processing file %s: %w", filename, err)
+      	}
+      	fmt.Println("File content:", string(data))
+      	return nil
+      }
+      
+      func main() {
+      	err := processFile("example.txt")
+      	if err != nil {
+      		fmt.Println("Error:", err)
+      		unwrappedErr := errors.Unwrap(err)
+      		fmt.Println("Unwrapped Error:", unwrappedErr)
+      	}
+      }
+    ```
 - **Panic and Recover**
   - Using `panic` for Unexpected Errors
   - Using `recover` to Handle Panics
