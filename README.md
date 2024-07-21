@@ -1,5 +1,7 @@
 # Go (Golang) Learning Plan
 
+[Go Cheat Sheet](https://go.dev/ref/spec)
+
 ## 1. Introduction to Go
 
 - **Overview of Go**
