@@ -1,9 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
+import "learn-golang/pkg/leetcode/dp"
 
 func main() {
-	fmt.Print("Hello, World!\n")
+	dp.TestUniquePathsObstacle()
 }
