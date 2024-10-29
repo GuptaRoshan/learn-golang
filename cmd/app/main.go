@@ -1,10 +1,9 @@
 package main
 
 import (
-	"learn-golang/pkg/lang"
+	"fmt"
 )
 
 func main() {
-	lang.StringOperations()
-	lang.ArraysExample()
+	fmt.Print("Hello, World!\n")
 }
