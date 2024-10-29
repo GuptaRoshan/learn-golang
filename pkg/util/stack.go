@@ -17,9 +17,7 @@ func (s *Stack[T]) Pop() (T, error) {
 	}
 
 	top := s.elements[len(s.elements)-1]
-
 	s.elements = s.elements[:len(s.elements)-1]
-
 	return top, nil
 }
 
@@ -30,7 +28,6 @@ func (s *Stack[T]) Peek() (T, error) {
 	}
 
 	top := s.elements[len(s.elements)-1]
-
 	return top, nil
 }
 
