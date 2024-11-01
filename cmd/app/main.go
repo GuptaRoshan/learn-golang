@@ -23,4 +23,9 @@ func main() {
 
 	poppedString, _ := stringStack.Pop()
 	fmt.Println("Popped from string stack:", poppedString) // Output: "world"
+
+	var x int = 10
+	var y *int = &x
+
+	fmt.Println("Value of y:", y) //  0x140000a6030
 }
