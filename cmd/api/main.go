@@ -2,8 +2,15 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	fmt.Println("Entry point for API service")
+	r := mux.NewRouter()
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world!")
+	})
+	http.ListenAndServe(":8080", r)
 }
