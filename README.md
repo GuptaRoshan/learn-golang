@@ -69,12 +69,90 @@ var z int = int(y)         // Convert float64 to int
 
 ### **Char or Runes**
 
-**Char Operations**
+**Rune Basics**
 
 ```go
 var r rune = 'A'
 fmt.Println(r)         // 65 (ASCII value)
 fmt.Println(string(r)) // "A"
+
+// Unicode rune example
+var r2 rune = '你'
+fmt.Println(r2)         // Unicode value (20320)
+fmt.Println(string(r2)) // "你"
+```
+
+**Looping Over a String (Rune by Rune)**
+
+```go
+str := "Hello, 世界" // Contains both ASCII and Unicode characters
+
+for i, r := range str {
+    fmt.Printf("Index: %d, Rune: %c, Unicode: %U\n", i, r, r)
+}
+```
+
+**Convert a String to Rune Slice**
+
+```go
+str := "Go语言"
+runes := []rune(str) // Convert string to rune slice
+fmt.Println("Rune slice:", runes) // [71 111 35821 35328]
+
+for i, r := range runes {
+    fmt.Printf("Index: %d, Rune: %c, Unicode: %U\n", i, r, r)
+}
+```
+
+**Modify a Rune Slice**
+
+```go
+runes := []rune("Hello")
+
+runes[0] = 'M' // Change 'H' to 'M'
+fmt.Println(string(runes)) // "Mello"
+```
+
+**Count Number of Runes in a String**
+
+```go
+str := "Hello, 世界"
+fmt.Println("Rune count:", utf8.RuneCountInString(str)) // Output: 9
+```
+
+**Check if a Character is a Letter, Digit, or Symbol**
+
+```go
+r := '你'
+fmt.Println("Is Letter:", unicode.IsLetter(r))   // true
+fmt.Println("Is Digit:", unicode.IsDigit(r))     // false
+fmt.Println("Is Symbol:", unicode.IsSymbol(r))   // false
+```
+
+**Convert Uppercase to Lowercase (or vice versa)**
+
+```go
+r := 'A'
+lower := unicode.ToLower(r)
+upper := unicode.ToUpper('g')
+
+fmt.Println(string(lower)) // "a"
+fmt.Println(string(upper)) // "G"
+```
+
+**Remove Non-Letter Characters from a String**
+
+```go
+str := "G0!o@#d123"
+var cleanRunes []rune
+
+for _, r := range str {
+    if unicode.IsLetter(r) {
+        cleanRunes = append(cleanRunes, r)
+    }
+}
+
+fmt.Println(string(cleanRunes)) // "Good"
 ```
 
 ### **Strings**
@@ -82,71 +160,71 @@ fmt.Println(string(r)) // "A"
 **String Operations**
 
 ```go
-	s1 := "Hello"
-	s2 := " World"
-	s3 := s1 + s2 // Concatenation
-	fmt.Println(s3)       // "Hello World"
-	fmt.Println(len(s3))  // String length
-	fmt.Println(s3[0])    // Access character (byte representation, ASCII of 'H')
+s1 := "Hello"
+s2 := " World"
+s3 := s1 + s2 // Concatenation
+fmt.Println(s3)       // "Hello World"
+fmt.Println(len(s3))  // String length
+fmt.Println(s3[0])    // Access character (byte representation, ASCII of 'H')
 
-	// Accessing a character as a string
-	fmt.Println(string(s3[0])) // "H"
+// Accessing a character as a string
+fmt.Println(string(s3[0])) // "H"
 
-	// String slicing
-	substr := s3[0:5] // Extracts "Hello"
-	fmt.Println(substr)
+// String slicing
+substr := s3[0:5] // Extracts "Hello"
+fmt.Println(substr)
 
-	// Convert string to a slice of bytes
-	byteArr := []byte(s3)
-	fmt.Println(byteArr) // [72 101 108 108 111 32 87 111 114 108 100]
+// Convert string to a slice of bytes
+byteArr := []byte(s3)
+fmt.Println(byteArr) // [72 101 108 108 111 32 87 111 114 108 100]
 
-	// Convert byte slice back to a string
-	newStr := string(byteArr)
-	fmt.Println(newStr) // "Hello World"
+// Convert byte slice back to a string
+newStr := string(byteArr)
+fmt.Println(newStr) // "Hello World"
 
-	// Convert string to a slice of runes
-	runeArr := []rune(s3)
-	fmt.Println(runeArr) // Unicode points
+// Convert string to a slice of runes
+runeArr := []rune(s3)
+fmt.Println(runeArr) // Unicode points
 
-	// Convert rune slice back to a string
-	fmt.Println(string(runeArr)) // "Hello World"
+// Convert rune slice back to a string
+fmt.Println(string(runeArr)) // "Hello World"
 
-	// String comparison
-	fmt.Println(strings.Compare("abc", "xyz")) // -1 (less than)
-	fmt.Println(strings.Compare("abc", "abc")) // 0 (equal)
-	fmt.Println(strings.Compare("xyz", "abc")) // 1 (greater than)
+// String comparison
+fmt.Println(strings.Compare("abc", "xyz")) // -1 (less than)
+fmt.Println(strings.Compare("abc", "abc")) // 0 (equal)
+fmt.Println(strings.Compare("xyz", "abc")) // 1 (greater than)
 
-	// String Contains
-	fmt.Println(strings.Contains(s3, "World")) // true
+// String Contains
+fmt.Println(strings.Contains(s3, "World")) // true
 
-	// String Prefix and Suffix Check
-	fmt.Println(strings.HasPrefix(s3, "Hel"))  // true
-	fmt.Println(strings.HasSuffix(s3, "ld"))   // true
+// String Prefix and Suffix Check
+fmt.Println(strings.HasPrefix(s3, "Hel"))  // true
+fmt.Println(strings.HasSuffix(s3, "ld"))   // true
 
-	// String Replacement
-	fmt.Println(strings.Replace(s3, "World", "Golang", 1)) // "Hello Golang"
+// String Replacement
+fmt.Println(strings.Replace(s3, "World", "Golang", 1)) // "Hello Golang"
 
-	// String Split
-	splitStr := strings.Split(s3, " ")
-	fmt.Println(splitStr) // ["Hello", "World"]
+// String Split
+splitStr := strings.Split(s3, " ")
+fmt.Println(splitStr) // ["Hello", "World"]
 
-	// String Join
-	joinedStr := strings.Join(splitStr, "-")
-	fmt.Println(joinedStr) // "Hello-World"
+// String Join
+joinedStr := strings.Join(splitStr, "-")
+fmt.Println(joinedStr) // "Hello-World"
 
-	// Uppercase and Lowercase Conversion
-	fmt.Println(strings.ToUpper(s3)) // "HELLO WORLD"
-	fmt.Println(strings.ToLower(s3)) // "hello world"
+// Uppercase and Lowercase Conversion
+fmt.Println(strings.ToUpper(s3)) // "HELLO WORLD"
+fmt.Println(strings.ToLower(s3)) // "hello world"
 
-	// Trimming Spaces
-	trimStr := "   GoLang   "
-	fmt.Println(strings.TrimSpace(trimStr)) // "GoLang"
+// Trimming Spaces
+trimStr := "   GoLang   "
+fmt.Println(strings.TrimSpace(trimStr)) // "GoLang"
 
-	// Finding Substring Index
-	fmt.Println(strings.Index(s3, "World")) // 6
+// Finding Substring Index
+fmt.Println(strings.Index(s3, "World")) // 6
 
-	// Repeat a String
-	fmt.Println(strings.Repeat("Go", 3)) // "GoGoGo"
+// Repeat a String
+fmt.Println(strings.Repeat("Go", 3)) // "GoGoGo"
 ```
 
 ### **Operators and Expressions**
