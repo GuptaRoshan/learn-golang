@@ -19,48 +19,488 @@
 
 ## 2. Basic Syntax and Concepts
 
-- **Variables and Constants**
-  - Declaring Variables
-  - Variable Types and Type Inference
-  - Constants and `iota`
-- **Data Types**
-  - Basic Types (`int`, `float`, `bool`, `string`)
-  - Type Conversions
-- **Char or Runes**
-  - char operations
-- **Strings**
-  - String operations
-- **Operators and Expressions**
-  - Arithmetic, Comparison, Logical, and Bitwise Operators
-- **Control Structures**
-  - `if-else` Statements
-  - `switch` Statements
-  - `for` Loops (traditional, range)
-  - `defer`, `break`, `continue`, and `goto`
-- **Functions**
-  - Defining and Calling Functions
-  - Parameters and Return Values
-  - Named Return Values
-  - Variadic Functions
-  - Anonymous Functions and Closures
+### **Variables and Constants**
+
+**Declaring Variables**
+
+```go
+var x int = 10
+y := 20 // Short-hand declaration
+```
+
+**Variable Types and Type Inference**
+
+```go
+var a int = 5       // Explicit type
+var b = 3.14        // Type inferred as float64
+c := "hello"        // Type inferred as string
+```
+
+**Constants and `iota`**
+
+```go
+const PI = 3.14159
+
+const (
+	A = iota // 0
+	B        // 1
+	C        // 2
+)
+```
+
+### **Data Types**
+
+**Basic Types (`int`, `float`, `bool`, `string`)**
+
+```go
+var i int = 42
+var f float64 = 3.14
+var b bool = true
+var s string = "GoLang"
+```
+
+**Type Conversions**
+
+```go
+var x int = 10
+var y float64 = float64(x) // Convert int to float64
+var z int = int(y)         // Convert float64 to int
+```
+
+### **Char or Runes**
+
+**Char Operations**
+
+```go
+var r rune = 'A'
+fmt.Println(r)         // 65 (ASCII value)
+fmt.Println(string(r)) // "A"
+```
+
+### **Strings**
+
+**String Operations**
+
+```go
+	s1 := "Hello"
+	s2 := " World"
+	s3 := s1 + s2 // Concatenation
+	fmt.Println(s3)       // "Hello World"
+	fmt.Println(len(s3))  // String length
+	fmt.Println(s3[0])    // Access character (byte representation, ASCII of 'H')
+
+	// Accessing a character as a string
+	fmt.Println(string(s3[0])) // "H"
+
+	// String slicing
+	substr := s3[0:5] // Extracts "Hello"
+	fmt.Println(substr)
+
+	// Convert string to a slice of bytes
+	byteArr := []byte(s3)
+	fmt.Println(byteArr) // [72 101 108 108 111 32 87 111 114 108 100]
+
+	// Convert byte slice back to a string
+	newStr := string(byteArr)
+	fmt.Println(newStr) // "Hello World"
+
+	// Convert string to a slice of runes
+	runeArr := []rune(s3)
+	fmt.Println(runeArr) // Unicode points
+
+	// Convert rune slice back to a string
+	fmt.Println(string(runeArr)) // "Hello World"
+
+	// String comparison
+	fmt.Println(strings.Compare("abc", "xyz")) // -1 (less than)
+	fmt.Println(strings.Compare("abc", "abc")) // 0 (equal)
+	fmt.Println(strings.Compare("xyz", "abc")) // 1 (greater than)
+
+	// String Contains
+	fmt.Println(strings.Contains(s3, "World")) // true
+
+	// String Prefix and Suffix Check
+	fmt.Println(strings.HasPrefix(s3, "Hel"))  // true
+	fmt.Println(strings.HasSuffix(s3, "ld"))   // true
+
+	// String Replacement
+	fmt.Println(strings.Replace(s3, "World", "Golang", 1)) // "Hello Golang"
+
+	// String Split
+	splitStr := strings.Split(s3, " ")
+	fmt.Println(splitStr) // ["Hello", "World"]
+
+	// String Join
+	joinedStr := strings.Join(splitStr, "-")
+	fmt.Println(joinedStr) // "Hello-World"
+
+	// Uppercase and Lowercase Conversion
+	fmt.Println(strings.ToUpper(s3)) // "HELLO WORLD"
+	fmt.Println(strings.ToLower(s3)) // "hello world"
+
+	// Trimming Spaces
+	trimStr := "   GoLang   "
+	fmt.Println(strings.TrimSpace(trimStr)) // "GoLang"
+
+	// Finding Substring Index
+	fmt.Println(strings.Index(s3, "World")) // 6
+
+	// Repeat a String
+	fmt.Println(strings.Repeat("Go", 3)) // "GoGoGo"
+```
+
+### **Operators and Expressions**
+
+**Arithmetic, Comparison, Logical, and Bitwise Operators**
+
+```go
+a, b := 10, 5
+
+// Arithmetic
+sum := a + b
+diff := a - b
+prod := a * b
+quot := a / b
+mod := a % b
+
+// Comparison
+fmt.Println(a > b)  // true
+
+// Logical
+fmt.Println(true && false) // false
+
+// Bitwise
+fmt.Println(a & b) // Bitwise AND
+fmt.Println(a | b) // Bitwise OR
+```
+
+### **Control Structures**
+
+**`if-else` Statements**
+
+```go
+x := 10
+if x > 5 {
+    fmt.Println("Greater than 5")
+} else {
+    fmt.Println("5 or less")
+}
+```
+
+**`switch` Statements**
+
+```go
+switch day := 3; day {
+case 1:
+    fmt.Println("Monday")
+case 2:
+    fmt.Println("Tuesday")
+default:
+    fmt.Println("Other day")
+}
+```
+
+**`for` Loops (Traditional, Range)**
+
+```go
+// Traditional loop
+for i := 0; i < 5; i++ {
+    fmt.Println(i)
+}
+
+// Range loop
+arr := []int{10, 20, 30}
+for i, v := range arr {
+    fmt.Println(i, v)
+}
+```
+
+**`defer`, `break`, `continue`, and `goto`**
+
+```go
+// defer
+defer fmt.Println("This runs last")
+
+// break
+for i := 0; i < 10; i++ {
+    if i == 5 {
+        break
+    }
+    fmt.Println(i)
+}
+
+// continue
+for i := 0; i < 5; i++ {
+    if i == 2 {
+        continue
+    }
+    fmt.Println(i)
+}
+
+// goto
+x := 1
+goto label
+label:
+fmt.Println("Jumped here")
+```
+
+### **Functions**
+
+**Defining and Calling Functions**
+
+```go
+func add(a int, b int) int {
+    return a + b
+}
+
+result := add(5, 10)
+fmt.Println(result)
+```
+
+**Parameters and Return Values**
+
+```go
+func multiply(a, b int) (int, int) {
+    return a * b, a + b
+}
+
+prod, sum := multiply(2, 3)
+```
+
+**Named Return Values**
+
+```go
+func divide(a, b float64) (quotient float64) {
+    quotient = a / b
+    return
+}
+```
+
+**Variadic Functions**
+
+```go
+func sum(nums ...int) int {
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    return total
+}
+
+fmt.Println(sum(1, 2, 3, 4))
+```
+
+**Anonymous Functions and Closures**
+
+```go
+func main() {
+    // Anonymous function
+    sum := func(a, b int) int {
+        return a + b
+    }
+    fmt.Println(sum(3, 4))
+
+    // Closure
+    counter := func() func() int {
+        count := 0
+        return func() int {
+            count++
+            return count
+        }
+    }()
+
+    fmt.Println(counter()) // 1
+    fmt.Println(counter()) // 2
+}
+```
+
 
 ## 3. Composite Types
 
-- **Arrays**
-  - Declaring and Initializing Arrays
-  - Accessing and Modifying Array Elements
-- **Slices**
-  - Creating and Manipulating Slices
-  - Slice Internals and Capacity
-  - Append, Copy, and Slice Expressions
-- **Maps**
-  - Creating and Accessing Maps
-  - Adding, Updating, and Deleting Map Elements
-  - Iterating over Maps
-- **Structs**
-  - Defining and Using Structs
-  - Nested Structs
-  - Struct Methods and Receivers
+### **1. Arrays**
+
+**Declaring and Initializing Arrays**
+
+```go
+  // Declare an array with explicit size
+  var arr1 [5]int // Default values: [0, 0, 0, 0, 0]
+  fmt.Println(arr1)
+
+  // Inline initialization
+  arr2 := [3]int{1, 2, 3}
+  fmt.Println(arr2) // Output: [1, 2, 3]
+
+  // Auto-sizing based on values
+  arr3 := [...]string{"Go", "Rust", "Python"}
+  fmt.Println(arr3) // Output: [Go Rust Python]
+```
+
+**Accessing and Modifying Array Elements**
+
+```go
+arr := [4]int{10, 20, 30, 40}
+fmt.Println(arr[1]) // Access index 1 → Output: 20
+
+arr[2] = 100 // Modify index 2
+fmt.Println(arr) // Output: [10, 20, 100, 40]
+
+// Loop through an array
+for i, v := range arr {
+    fmt.Println("Index:", i, "Value:", v)
+}
+```
+
+
+### **2. Slices**
+
+**Creating and Manipulating Slices**
+
+```go
+// Create a slice from an array
+arr := [5]int{1, 2, 3, 4, 5}
+slice1 := arr[1:4] // Creates [2, 3, 4]
+fmt.Println(slice1)
+
+// Create a slice using make()
+slice2 := make([]int, 3, 5) // Length 3, Capacity 5
+fmt.Println(slice2) // [0 0 0]
+```
+
+**Slice Internals and Capacity**
+
+```go
+s := []int{1, 2, 3}
+fmt.Println(len(s), cap(s)) // Length: 3, Capacity: 3
+
+s = append(s, 4, 5)
+fmt.Println(len(s), cap(s)) // Length: 5, Capacity: 6 (may double)
+```
+
+**Append, Copy, and Slice Expressions**
+
+```go
+// Append elements
+s := []int{1, 2, 3}
+s = append(s, 4, 5)
+fmt.Println(s) // Output: [1 2 3 4 5]
+
+// Copy slices
+s1 := []int{10, 20, 30}
+s2 := make([]int, len(s1))
+copy(s2, s1)
+fmt.Println(s2) // Output: [10 20 30]
+
+// Slice expressions
+s3 := s1[:2]  // First two elements
+s4 := s1[1:]  // Elements from index 1 onward
+fmt.Println(s3, s4)
+```
+
+### **3. Maps**
+
+**Creating and Accessing Maps**
+
+```go
+// Create a map
+m := make(map[string]int)
+m["apple"] = 5
+m["banana"] = 8
+
+fmt.Println(m["apple"]) // Output: 5
+```
+
+**Adding, Updating, and Deleting Map Elements**
+
+```go
+m := map[string]int{"one": 1, "two": 2}
+
+// Add or update value
+m["three"] = 3
+m["one"] = 100
+
+// Delete a key
+delete(m, "two")
+
+// Check if key exists
+value, exists := m["one"]
+if exists {
+    fmt.Println("Value:", value)
+}
+```
+
+**Iterating Over Maps**
+
+```go
+m := map[string]int{"a": 10, "b": 20, "c": 30}
+
+for key, value := range m {
+    fmt.Println("Key:", key, "Value:", value)
+}
+```
+
+### **4. Structs**
+
+**Defining and Using Structs**
+
+```go
+type Person struct {
+    Name string
+    Age  int
+}
+
+func main() {
+    p := Person{Name: "Alice", Age: 25}
+    fmt.Println(p.Name, p.Age)
+}
+```
+
+**Nested Structs**
+
+```go
+type Address struct {
+    City  string
+    State string
+}
+
+type Employee struct {
+    Name    string
+    Age     int
+    Address Address
+}
+
+func main() {
+    emp := Employee{Name: "John", Age: 30, Address: Address{City: "NY", State: "USA"}}
+    fmt.Println(emp.Name, emp.Address.City)
+}
+```
+
+**Struct Methods and Receivers**
+
+```go
+type Car struct {
+    Brand string
+    Speed int
+}
+
+// Method with receiver
+func (c Car) Info() {
+    fmt.Println("Brand:", c.Brand, "Speed:", c.Speed)
+}
+
+// Method with pointer receiver (modifies struct)
+func (c *Car) Accelerate(increase int) {
+    c.Speed += increase
+}
+
+func main() {
+    car := Car{"Toyota", 100}
+    car.Info()
+    
+    car.Accelerate(20)
+    car.Info() // Updated speed
+}
+```
+
 
 ## 4. Pointers
 
@@ -982,41 +1422,3 @@ In Go, vendoring refers to the practice of storing dependencies locally within y
   ```go
       go mod tidy
   ```
-
-
-
-## 10. Building and Deploying Go Applications
-
-- **Compilation and Binary Distribution**
-  - `go build`, `go install`, `go run`
-  - Creating Executable Binaries
-- **Cross-Compilation**
-  - Compiling for Different Platforms
-- **Deploying Go Applications**
-  - Best Practices for Deployment
-  - Continuous Integration and Deployment (CI/CD)
-- **Dockerizing Go Applications**
-  - Creating Dockerfiles for Go Applications
-  - Building and Running Go Containers
-
-## 11. Performance Optimization
-
-- **Profiling and Benchmarking**
-  - Using `pprof` for Profiling
-  - Writing Benchmarks
-- **Common Performance Pitfalls**
-  - Avoiding Common Mistakes
-- **Memory Management and Garbage Collection**
-  - Understanding Go’s Garbage Collector
-  - Memory Allocation Patterns
-
-## 12. Commonly Used Frameworks and Tools
-
-- **Web Frameworks**
-  - Gin, Echo, Fiber
-- **ORMs**
-  - GORM, SQLBoiler
-- **CLI Tools**
-  - Cobra, Viper
-- **Code Generation**
-  - `go generate`, `protoc` for Protocol Buffers
