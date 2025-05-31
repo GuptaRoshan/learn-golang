@@ -2,6 +2,8 @@
 
 [Go Cheat Sheet](https://go.dev/ref/spec)
 
+[Roadmap](https://roadmap.sh/golang)
+
 ## 1. Introduction to Go
 
 - **Overview of Go**
